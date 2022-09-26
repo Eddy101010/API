@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using WebApi.Data;
 using WebApi.Interfaces;
 using WebApi.Helpers;
+using System.Net;
+using Microsoft.AspNetCore.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +28,24 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
     app.UseCors("corsapp");
 
+}
+else
+{
+    app.UseExceptionHandler(
+            options => {
+                options.Run(
+                      async context =>
+                       {
+                          context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                          var ex = context.Features.Get<IExceptionHandlerFeature>();
+                          if (ex != null)
+                          {
+                              await context.Response.WriteAsync(ex.Error.Message);
+                          }
+                       }
+                    );     
+            }
+        );
 }
 
 app.UseCors(m => m.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());

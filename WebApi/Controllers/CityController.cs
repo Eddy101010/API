@@ -25,7 +25,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetCities()
+        public async Task<IActionResult> GeCities()
         {
             var cities = await uow.CityRepository.GetCitiesAsync();
             var citiesDto = mapper.Map<IEnumerable<CityDto>>(cities);
@@ -55,22 +55,34 @@ namespace WebApi.Controllers
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateCity(int id, CityDto cityDto)
         {
-            var cityFromDb = await uow.CityRepository.FindCity(id);
-            cityFromDb.LastUpdatedBy = 1;
-            cityFromDb.LastUpdatedOn = DateTime.Now;
-            mapper.Map(cityDto, cityFromDb);
-            await uow.SaveAsync();
-            return StatusCode(200);
+                if (id != cityDto.Id)
+                    return BadRequest("Update denied");
+
+                var cityFromDb = await uow.CityRepository.FindCity(id);
+                if (cityFromDb == null)
+                    return BadRequest("Update denied");
+
+                cityFromDb.LastUpdatedBy = 1;
+                cityFromDb.LastUpdatedOn = DateTime.Now;
+                mapper.Map(cityDto, cityFromDb);
+
+                throw new Exception("Unknown error occured");
+                await uow.SaveAsync();
+                return StatusCode(200);
+
+
+                return StatusCode(500, "Unknown error has occured");
+                
         }
 
         [HttpPut("updateCityName/{id}")]
         public async Task<IActionResult> UpdateCity(int id, CityUpdateDto cityDto)
         {
-            var cityFromDb = await uow.CityRepository.FindCity(id);
+           var cityFromDb = await uow.CityRepository.FindCity(id);
             cityFromDb.LastUpdatedBy = 1;
             cityFromDb.LastUpdatedOn = DateTime.Now;
-            mapper.Map(cityDto, cityFromDb);
-            await uow.SaveAsync();
+           mapper.Map(cityDto, cityFromDb);
+           await uow.SaveAsync();
             return StatusCode(200);
         }
 
@@ -95,16 +107,16 @@ namespace WebApi.Controllers
         }
 
         //[HttpPost]
-        ////[HttpPost("add/{cityname")]
-        ////public async Task<IActionResult> AddCity(string cityName)
-        ////public async Task<IActionResult> AddCity(string cityName)
-        ////{
-        ////    City city = new City();
-        ////    city.Name = cityName;
-        ////    await dc.Cities.AddAsync(city);
-        ////    await dc.SaveChangesAsync();
-        ////    return Ok(city);
-        ////}
+        //[HttpPost("add/{cityname")]
+        //public async Task<IActionResult> AddCity(string cityName)
+        //public async Task<IActionResult> AddCity(string cityName)
+        //{
+        //    City city = new City();
+        //   city.Name = cityName;
+        //  await dc.Cities.AddAsync(city);
+        //    await dc.SaveChangesAsync();
+        //  return Ok(city);
+        //}
 
     }
 }
