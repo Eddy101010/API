@@ -25,7 +25,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GeCities()
+        public async Task<IActionResult> GetCities()
         {
             var cities = await uow.CityRepository.GetCitiesAsync();
             var citiesDto = mapper.Map<IEnumerable<CityDto>>(cities);
