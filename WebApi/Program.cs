@@ -4,6 +4,7 @@ using WebApi.Interfaces;
 using WebApi.Helpers;
 using System.Net;
 using Microsoft.AspNetCore.Diagnostics;
+using WebApi.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,6 +50,8 @@ else
 }
 
 app.UseCors(m => m.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseAuthorization();
 
