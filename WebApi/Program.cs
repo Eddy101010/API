@@ -5,6 +5,9 @@ using WebApi.Helpers;
 using System.Net;
 using Microsoft.AspNetCore.Diagnostics;
 using WebApi.Middlewares;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +21,17 @@ builder.Services.AddCors();
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
+var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("shhh.. this is my top secret"));
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme) .AddJwtBearer(opt =>
+{
+    opt.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        IssuerSigningKey = key
+    };
+});
 
 
 var app = builder.Build();
@@ -30,28 +44,30 @@ if (app.Environment.IsDevelopment())
     app.UseCors("corsapp");
 
 }
-else
-{
-    app.UseExceptionHandler(
-            options => {
-                options.Run(
-                      async context =>
-                       {
-                          context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                          var ex = context.Features.Get<IExceptionHandlerFeature>();
-                          if (ex != null)
-                          {
-                              await context.Response.WriteAsync(ex.Error.Message);
-                          }
-                       }
-                    );     
-            }
-        );
-}
+//else
+//{
+//    app.UseExceptionHandler(
+//            options => {
+//                options.Run(
+//                      async context =>
+//                       {
+//                          context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+//                          var ex = context.Features.Get<IExceptionHandlerFeature>();
+//                          if (ex != null)
+//                          {
+//                              await context.Response.WriteAsync(ex.Error.Message);
+//                          }
+//                       }
+//                    );     
+//            }
+//        );
+//}
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseCors(m => m.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
-app.UseMiddleware<ExceptionMiddleware>();
+app.UseAuthentication();
 
 app.UseAuthorization();
 
