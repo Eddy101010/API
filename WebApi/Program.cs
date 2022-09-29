@@ -30,8 +30,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme) .AddJ
         ValidateIssuerSigningKey = true,
         ValidateIssuer = false,
         ValidateAudience = false,
+        ValidateLifetime = true,
+        ClockSkew = TimeSpan.Zero,
         IssuerSigningKey = key
-    };
+        
+    };  
 });
 
 
