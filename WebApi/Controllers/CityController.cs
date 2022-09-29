@@ -30,7 +30,6 @@ namespace WebApi.Controllers
         //[AllowAnonymous]
         public async Task<IActionResult> GetCities()
         {
-            throw new UnauthorizedAccessException();
             var cities = await uow.CityRepository.GetCitiesAsync();
             var citiesDto = mapper.Map<IEnumerable<CityDto>>(cities);
 
@@ -44,12 +43,6 @@ namespace WebApi.Controllers
             var city = mapper.Map<City>(cityDto);
             city.LastUpdatedBy = 1;
             city.LastUpdatedOn = DateTime.Now;
-
-            //var city = new City {
-            //    Name = cityDto.Name,
-            //    LastUpdatedBy = 1,
-            //    LastUpdatedOn = DateTime.Now
-            //};
 
             uow.CityRepository.AddCity(city);
             await uow.SaveAsync();
@@ -109,18 +102,6 @@ namespace WebApi.Controllers
             await uow.SaveAsync();
             return Ok(id);  
         }
-
-        //[HttpPost]
-        //[HttpPost("add/{cityname")]
-        //public async Task<IActionResult> AddCity(string cityName)
-        //public async Task<IActionResult> AddCity(string cityName)
-        //{
-        //    City city = new City();
-        //   city.Name = cityName;
-        //  await dc.Cities.AddAsync(city);
-        //    await dc.SaveChangesAsync();
-        //  return Ok(city);
-        //}
 
     }
 }

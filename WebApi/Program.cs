@@ -21,7 +21,8 @@ builder.Services.AddCors();
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
-var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("shhh.. this is my top secret"));
+var secretKey = builder.Configuration.GetSection("AppSettings:Key").Value;
+var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme) .AddJwtBearer(opt =>
 {
     opt.TokenValidationParameters = new TokenValidationParameters
@@ -44,24 +45,6 @@ if (app.Environment.IsDevelopment())
     app.UseCors("corsapp");
 
 }
-//else
-//{
-//    app.UseExceptionHandler(
-//            options => {
-//                options.Run(
-//                      async context =>
-//                       {
-//                          context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-//                          var ex = context.Features.Get<IExceptionHandlerFeature>();
-//                          if (ex != null)
-//                          {
-//                              await context.Response.WriteAsync(ex.Error.Message);
-//                          }
-//                       }
-//                    );     
-//            }
-//        );
-//}
 
 app.UseMiddleware<ExceptionMiddleware>();
 

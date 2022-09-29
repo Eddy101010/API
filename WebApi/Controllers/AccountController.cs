@@ -12,10 +12,12 @@ namespace WebApi.Controllers
     public class AccountController : BaseController
     {
         private readonly IUnitOfWork uow;
+        private readonly IConfiguration configuration;
 
-        public AccountController(IUnitOfWork uow)
+        public AccountController(IUnitOfWork uow, IConfiguration configuration)
         {
             this.uow = uow;
+            this.configuration = configuration;
         }
 
         [HttpPost("login")]
@@ -37,7 +39,8 @@ namespace WebApi.Controllers
 
         private string CreateJWT(User user)
         {
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("shhh.. this is my top secret")); 
+            var secretKey = configuration.GetSection("AppSettings:Key").Value;
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
             var claims = new Claim[]
             {
                 new Claim(ClaimTypes.Name,user.Username),
@@ -48,7 +51,7 @@ namespace WebApi.Controllers
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.AddMinutes(1),
+                Expires = DateTime.UtcNow.AddDays(10),
                 SigningCredentials = signingCredentials
             };
 
