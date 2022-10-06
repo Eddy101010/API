@@ -33,7 +33,7 @@ namespace WebAPI.Data.Repo
         {
             using (var hmac = new HMACSHA512(passwordKey))
             {
-                var passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(passwordText));
+                var passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(passwordText));
 
                 for (int i = 0; i < passwordHash.Length; i++)
                 {
@@ -52,7 +52,7 @@ namespace WebAPI.Data.Repo
             using (var hmac = new HMACSHA512())
             {
                 passwordKey = hmac.Key;
-                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
 
             }
 
