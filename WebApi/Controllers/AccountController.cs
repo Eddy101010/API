@@ -4,6 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using WebApi.Dtos;
+using WebApi.Errors;
 using WebApi.Interfaces;
 using WebApi.Models;
 
@@ -26,9 +27,14 @@ namespace WebApi.Controllers
         {
             var user = await uow.UserRepository.Authenticate(loginReq.UserName, loginReq.Password);
 
+            ApiError apiError = new ApiError();
+
             if (user == null)
             {
-                return Unauthorized("Invalid User ID or Password");  
+                apiError.ErrorCode = Unauthorized().StatusCode;
+                apiError.ErrorMessage = "Invalid User ID or Password";
+                apiError.ErrorDetails = "User Id or Password doesn't exist";
+                return Unauthorized(apiError);  
             }
 
             var loginResponse = new LoginResponseDto();
@@ -42,8 +48,13 @@ namespace WebApi.Controllers
 
         public async Task<IActionResult> Register(LoginReqDto loginReq)
         {
+            ApiError apiError = new ApiError();
             if (await uow.UserRepository.UserAlreadyExists(loginReq.UserName))
-                return BadRequest("User already exists");
+            {
+                apiError.ErrorCode = BadRequest().StatusCode;
+                apiError.ErrorMessage = "User Already Exists";
+                return BadRequest(apiError);
+            }
 
             uow.UserRepository.Register(loginReq.UserName, loginReq.Password);
             await uow.SaveAsync();
