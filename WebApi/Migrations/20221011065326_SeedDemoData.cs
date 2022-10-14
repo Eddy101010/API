@@ -32,7 +32,7 @@ select 'House', GETDATE(),@UserID
 IF not exists (select name from PropertyTypes where Name='Apartment')
 insert into PropertyTypes(Name,LastUpdatedOn,LastUpdatedBy)
 select 'Apartment', GETDATE(),@UserID
-	
+
 IF not exists (select name from PropertyTypes where Name='Duplex')
 insert into PropertyTypes(Name,LastUpdatedOn,LastUpdatedBy)
 select 'Duplex', GETDATE(),@UserID
@@ -44,11 +44,11 @@ select 'Duplex', GETDATE(),@UserID
 IF not exists (select name from FurnishingTypes where Name='Fully')
 insert into FurnishingTypes(Name, LastUpdatedOn, LastUpdatedBy)
 select 'Fully', GETDATE(),@UserID
-	
+
 IF not exists (select name from FurnishingTypes where Name='Semi')
 insert into FurnishingTypes(Name, LastUpdatedOn, LastUpdatedBy)
 select 'Semi', GETDATE(),@UserID
-	
+
 IF not exists (select name from FurnishingTypes where Name='Unfurnished')
 insert into FurnishingTypes(Name, LastUpdatedOn, LastUpdatedBy)
 select 'Unfurnished', GETDATE(),@UserID
@@ -73,8 +73,8 @@ select 'Bangalore',@UserID,getdate(),'India'
 --------------------------
 --Seed property for sell
 IF not exists (select top 1 name from Properties where Name='White House Demo')
-insert into Properties(SellRent,Name,PropertyTypeId,BHK,FurnishingTypeId,Price,BuiltArea,CarpetArea,Address,
-Address2,CityId,FloorNo,TotalFloors,ReadyToMove,MainEntrance,Security,Gated,Maintenance,EstPossessionOn,Age,Description,PostedOn,PostedBy,LastUpdatedOn,LastUpdatedBy)
+insert into Properties(SellRent,Name,PropertyTypeId,BHK,FurnishingTypeId,Price,BuiltArea,CarpetArea,Adress,
+Adress2,CityId,FloorNo,TotalFloors,ReadyToMove,MainEntrance,Security,Gated,Maintenance,EstPossessionOn,Age,Description,PostedOn,PostedBy,LastUpdatedOn,LastUpdatedBy)
 select 
 1, --Sell Rent
 'White House Demo', --Name
@@ -107,8 +107,8 @@ GETDATE(), --Last Updated on
 --Seed property for rent
 ---------------------------
 IF not exists (select top 1 name from Properties where Name='Birla House Demo')
-insert into Properties(SellRent,Name,PropertyTypeId,BHK,FurnishingTypeId,Price,BuiltArea,CarpetArea,Address,
-Address2,CityId,FloorNo,TotalFloors,ReadyToMove,MainEntrance,Security,Gated,Maintenance,EstPossessionOn,Age,Description,PostedOn,PostedBy,LastUpdatedOn,LastUpdatedBy)
+insert into Properties(SellRent,Name,PropertyTypeId,BHK,FurnishingTypeId,Price,BuiltArea,CarpetArea,Adress,
+Adress2,CityId,FloorNo,TotalFloors,ReadyToMove,MainEntrance,Security,Gated,Maintenance,EstPossessionOn,Age,Description,PostedOn,PostedBy,LastUpdatedOn,LastUpdatedBy)
 select 
 2, --Sell Rent
 'Birla House Demo', --Name

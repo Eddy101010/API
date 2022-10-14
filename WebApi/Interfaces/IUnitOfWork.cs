@@ -1,4 +1,6 @@
-﻿namespace WebApi.Interfaces
+﻿using WebAPI.Interfaces;
+
+namespace WebApi.Interfaces
 {
     public interface IUnitOfWork
     {
