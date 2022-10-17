@@ -66,3 +66,14 @@ C:\Users\eduard.anghel\Desktop\API\WebApi\bin\Debug\net6.0\Microsoft.AspNetCore.
 C:\Users\eduard.anghel\Desktop\API\WebApi\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\Users\eduard.anghel\Desktop\API\WebApi\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
 C:\Users\eduard.anghel\Desktop\API\WebApi\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\eduard.anghel\Desktop\API\WebApi\bin\Debug\net6.0\Microsoft.AspNetCore.Connections.Abstractions.dll
+C:\Users\eduard.anghel\Desktop\API\WebApi\bin\Debug\net6.0\Microsoft.AspNetCore.Http.Connections.Client.dll
+C:\Users\eduard.anghel\Desktop\API\WebApi\bin\Debug\net6.0\Microsoft.AspNetCore.Http.Connections.Common.dll
+C:\Users\eduard.anghel\Desktop\API\WebApi\bin\Debug\net6.0\Microsoft.AspNetCore.SignalR.Client.dll
+C:\Users\eduard.anghel\Desktop\API\WebApi\bin\Debug\net6.0\Microsoft.AspNetCore.SignalR.Client.Core.dll
+C:\Users\eduard.anghel\Desktop\API\WebApi\bin\Debug\net6.0\Microsoft.AspNetCore.SignalR.Common.dll
+C:\Users\eduard.anghel\Desktop\API\WebApi\bin\Debug\net6.0\Microsoft.AspNetCore.SignalR.Protocols.Json.dll
+C:\Users\eduard.anghel\Desktop\API\WebApi\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\eduard.anghel\Desktop\API\WebApi\bin\Debug\net6.0\Microsoft.Extensions.Features.dll
+C:\Users\eduard.anghel\Desktop\API\WebApi\bin\Debug\net6.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\eduard.anghel\Desktop\API\WebApi\bin\Debug\net6.0\System.IO.Pipelines.dll
