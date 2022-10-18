@@ -6,17 +6,22 @@ using WebApi.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using WebApi.HubConfig;
+using WebApi.Hub;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddSignalR();
+
+builder.Services.AddCors(options => {
+    options.AddPolicy("CORSPolicy", builder => builder.AllowAnyMethod().AllowAnyHeader().AllowCredentials().SetIsOriginAllowed((hosts) => true));
+});
 
 builder.Services.AddControllers().AddNewtonsoftJson();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCors();
-builder.Services.AddSignalR();
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
@@ -37,32 +42,32 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme) .AddJ
 });
 
 
-var app = builder.Build();
+var app = builder.Build();  
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    app.UseCors("corsapp");
+    app.UseCors("CORSPolicy");
 
 }
 
 app.UseMiddleware<ExceptionMiddleware>();
 
-app.UseCors(m => m.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 app.UseRouting();
 
 app.UseAuthentication();
 
-app.UseEndpoints(endpoints =>
-{
+app.UseAuthorization();
+
+app.UseEndpoints(endpoints => {
     endpoints.MapControllers();
-    endpoints.MapHub<ChartHub>("/chart");
+    endpoints.MapHub<MessageHub>("/offers");
 });
 
-app.UseAuthorization();
+app.UseHttpsRedirection();
 
 app.MapControllers();
 
