@@ -45,6 +45,7 @@ namespace WebAPI.Data.Repo
             .Include(p => p.FurnishingType)
             .Include(p => p.Photos)
             .Where(p => p.Id == id)
+            .DefaultIfEmpty()
             .FirstAsync();
 
             return properties;
