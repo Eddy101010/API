@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using WebApi.Dtos;
 using WebApi.Models;
+using WebAPI.Models;
 
 namespace WebApi.Helpers
 {
@@ -11,6 +12,8 @@ namespace WebApi.Helpers
             CreateMap<City, CityDto>().ReverseMap();
 
             CreateMap<City, CityUpdateDto>().ReverseMap();
+
+            CreateMap<Photo, PhotoDto>().ReverseMap();
 
             CreateMap<Property, PropertyListDto>().ForMember(d => d.City, opt => opt.MapFrom(src => src.City.Name))
                                                   .ForMember(d => d.Country, opt => opt.MapFrom(src => src.City.Country))
