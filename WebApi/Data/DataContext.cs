@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 using WebApi.Models;
+using WebAPI.Models;
 
 namespace WebApi.Data
 {

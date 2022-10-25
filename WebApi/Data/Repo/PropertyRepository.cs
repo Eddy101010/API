@@ -3,6 +3,7 @@ using WebApi.Data;
 using WebApi.Interfaces;
 using WebApi.Models;
 using WebAPI.Interfaces;
+using WebAPI.Models;
 
 namespace WebAPI.Data.Repo
 {

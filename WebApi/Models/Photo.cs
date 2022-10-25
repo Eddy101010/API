@@ -4,7 +4,7 @@ using WebApi.Models;
 
 namespace WebAPI.Models
 {
-    [Table("Photos")]
+    
     public class Photo : BaseEntity
     {
         [Required]
