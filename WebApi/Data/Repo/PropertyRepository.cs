@@ -49,6 +49,7 @@ namespace WebAPI.Data.Repo
             .DefaultIfEmpty()
             .FirstAsync();
 
+
             return properties;
         }
 

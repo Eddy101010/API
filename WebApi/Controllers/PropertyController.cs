@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualBasic;
 using WebApi.Dtos;
 using WebApi.Interfaces;
 using WebAPI.Models;
@@ -41,7 +40,7 @@ namespace WebApi.Controllers
 
         [HttpPost("add/photo/{propId}")]
         [Authorize]
-        public async Task<IActionResult> AddPropertyPhoto(IFormFile file, int propId)
+        public async Task<IActionResult> AddPropertyPhoto(IFormFile file, int propId)   
         {
             var result = await photoService.UploadPhotoAsync(file);
             if (result.Error != null)
@@ -54,12 +53,13 @@ namespace WebApi.Controllers
                 ImageUrl = result.SecureUrl.AbsoluteUri,
                 PublicId = result.PublicId
             };
-            if (property.Photos.Count == 0)
+            property.Photos.Add(photo);
+            if (property.Photos.Count == 1)
             {
                 photo.IsPrimary = true;
             }
 
-            property.Photos.Add(photo);
+            
             await uow.SaveAsync();
             return StatusCode(201);
         }
