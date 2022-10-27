@@ -78,3 +78,4 @@ C:\Users\eduard.anghel\Desktop\API\WebApi\bin\Debug\net6.0\Microsoft.Extensions.
 C:\Users\eduard.anghel\Desktop\API\WebApi\bin\Debug\net6.0\Microsoft.Extensions.Logging.Abstractions.dll
 C:\Users\eduard.anghel\Desktop\API\WebApi\bin\Debug\net6.0\System.IO.Pipelines.dll
 C:\Users\eduard.anghel\Desktop\API\WebApi\bin\Debug\net6.0\CloudinaryDotNet.dll
+C:\Users\eduard.anghel\Desktop\API\WebApi\bin\Debug\net6.0\WebApi.staticwebassets.runtime.json
