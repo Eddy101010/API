@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using WebApi.Hub;
+using WebAPI.Controllers;
 
 namespace WebApi.Controllers
 {

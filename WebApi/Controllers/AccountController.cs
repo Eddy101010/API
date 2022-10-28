@@ -8,6 +8,7 @@ using WebApi.Errors;
 using WebApi.Extensions;
 using WebApi.Interfaces;
 using WebApi.Models;
+using WebAPI.Controllers;
 
 namespace WebApi.Controllers
 {

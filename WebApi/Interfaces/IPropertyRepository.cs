@@ -1,5 +1,4 @@
-﻿using WebApi.Models;
-using WebAPI.Models;
+﻿using WebAPI.Models;
 
 namespace WebAPI.Interfaces
 {

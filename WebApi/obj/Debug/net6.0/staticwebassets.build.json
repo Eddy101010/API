@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "TTzzSM8LgiF71/sBpBxV6oSGJgpnbDYnPYIYOKtXqvo=",
+  "Hash": "HbkM4GiPno0/7+aBuWGHMdg8irsiBilq1Ut6f8EDHGg=",
   "Source": "WebApi",
   "BasePath": "_content/WebApi",
   "Mode": "Default",
@@ -16,6 +16,40 @@
     }
   ],
   "Assets": [
+    {
+      "Identity": "C:\\Users\\eduard.anghel\\Desktop\\API\\WebApi\\wwwroot\\images\\0.png",
+      "SourceId": "WebApi",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\eduard.anghel\\Desktop\\API\\WebApi\\wwwroot\\",
+      "BasePath": "_content/WebApi",
+      "RelativePath": "images/0.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\0.png"
+    },
+    {
+      "Identity": "C:\\Users\\eduard.anghel\\Desktop\\API\\WebApi\\wwwroot\\images\\3.png",
+      "SourceId": "WebApi",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\eduard.anghel\\Desktop\\API\\WebApi\\wwwroot\\",
+      "BasePath": "_content/WebApi",
+      "RelativePath": "images/3.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\3.png"
+    },
     {
       "Identity": "C:\\Users\\eduard.anghel\\Desktop\\API\\WebApi\\wwwroot\\images\\prop-1.png",
       "SourceId": "WebApi",

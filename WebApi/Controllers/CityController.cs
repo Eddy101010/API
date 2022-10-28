@@ -2,11 +2,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Reflection.Metadata.Ecma335;
 using WebApi.Dtos;
 using WebApi.Interfaces;
 using WebApi.Models;
+using WebAPI.Controllers;
 
 namespace WebApi.Controllers
 {
