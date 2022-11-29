@@ -6,7 +6,6 @@ using WebApi.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using WebApi.Hub;
 using WebAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -68,7 +67,6 @@ app.UseAuthorization();
 
 app.UseEndpoints(endpoints => {
     endpoints.MapControllers();
-    endpoints.MapHub<MessageHub>("/offers");
 });
 
 app.UseHttpsRedirection();

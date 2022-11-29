@@ -11,5 +11,6 @@ namespace WebAPI.Controllers
         {
             return int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
         }
+
     }
 }

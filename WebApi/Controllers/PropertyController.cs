@@ -40,13 +40,14 @@ namespace WebApi.Controllers
             return Ok(propertyDto);
         }
 
-        [HttpPost("add")]
+        [HttpPost("add/property")]
         [AllowAnonymous]
         public async Task<IActionResult> AddProperty(PropertyDto propertyDto)
         {
-           var property = mapper.Map<Property>(propertyDto);
-            property.PostedBy = 1;
-            property.LastUpdatedBy = 1;
+            var property = mapper.Map<Property>(propertyDto);
+            var userId = GetUserId();
+            property.PostedBy = userId; 
+            property.LastUpdatedBy = userId;
             uow.PropertyRepository.AddProperty(property);
             await uow.SaveAsync();
             return StatusCode(201);
@@ -55,13 +56,13 @@ namespace WebApi.Controllers
         //add photo to cloud
         [HttpPost("add/photo/{propId}")]
         [Authorize]
-        public async Task<IActionResult> AddPropertyPhoto(IFormFile file, int propId)   
+        public async Task<IActionResult> AddPropertyCloudPhoto(IFormFile file, int propId)   
         {
             var result = await photoService.UploadPhotoAsync(file);
             if (result.Error != null)
                 return BadRequest(result.Error.Message);
 
-            var property = await uow.PropertyRepository.GetPropertyByIdAsync(propId);
+            var property = await uow.PropertyRepository.GetPropertyByIdAsync(propId); 
 
             var photo = new Photo
             {
@@ -82,7 +83,7 @@ namespace WebApi.Controllers
         //update primary photo from cloud
         [HttpPost("add/set-primary-photo/{propId}/{photoPublicId}")]
         [AllowAnonymous]
-        public async Task<IActionResult> SetPrimaryPhoto(int propId, string photoPublicId)
+        public async Task<IActionResult> SetCloudPrimaryPhoto(int propId, string photoPublicId)
         {
             var userId = GetUserId();
 
@@ -115,7 +116,7 @@ namespace WebApi.Controllers
         //delete photo from cloud and database
         [HttpDelete("delete-photo/{propId}/{photoPublicId}")]
         [AllowAnonymous]
-        public async Task<IActionResult> DeletePhoto(int propId, string photoPublicId)
+        public async Task<IActionResult> DeleteCloudPhoto(int propId, string photoPublicId)
         {
             var userId = GetUserId();
 
@@ -146,10 +147,9 @@ namespace WebApi.Controllers
 
         }
 
-        //add photo static
-        [HttpPost]
+        //add static photo
+        [HttpPost("UploadStaticFile")]
         [AllowAnonymous]
-        [Route("UploadFile")]
         public bool UploadFile(int id, IFormFile file)
         {
 
@@ -171,6 +171,25 @@ namespace WebApi.Controllers
             {
                 return false;
             }
+        }
+
+        //delete static photo
+        [HttpDelete("delete-static-photo/{id}")]
+        [AllowAnonymous]
+        public bool DeleteStaticFile(int id)
+        {
+            string extension = ".png";
+            //read the file
+            string path = Path.Combine(Environment.CurrentDirectory, "wwwroot/images");
+            if (!Directory.Exists(path))
+            {
+                return false;
+            }
+            var location = Path.Combine(path, id.ToString() + extension);
+            if (System.IO.File.Exists(location))
+                System.IO.File.Delete(location);
+                      
+            return true;
         }
 
     }
