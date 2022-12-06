@@ -41,7 +41,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("add/property")]
-        [AllowAnonymous]
+        [Authorize]
         public async Task<IActionResult> AddProperty(PropertyDto propertyDto)
         {
             var property = mapper.Map<Property>(propertyDto);

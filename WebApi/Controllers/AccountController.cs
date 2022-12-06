@@ -1,31 +1,29 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using WebApi.Dtos;
 using WebApi.Errors;
 using WebApi.Extensions;
 using WebApi.Interfaces;
 using WebApi.Models;
-using WebAPI.Controllers;
 
-namespace WebApi.Controllers
+namespace WebAPI.Controllers
 {
     public class AccountController : BaseController
     {
         private readonly IUnitOfWork uow;
         private readonly IConfiguration configuration;
-
         public AccountController(IUnitOfWork uow, IConfiguration configuration)
         {
-            this.uow = uow;
             this.configuration = configuration;
+            this.uow = uow;
         }
 
+        // api/account/login
         [HttpPost("login")]
-
-        public async Task<IActionResult> Login(LoginReqDto loginReq)    
+        public async Task<IActionResult> Login(LoginReqDto loginReq)
         {
             var user = await uow.UserRepository.Authenticate(loginReq.UserName, loginReq.Password);
 
@@ -34,34 +32,33 @@ namespace WebApi.Controllers
             if (user == null)
             {
                 apiError.ErrorCode = Unauthorized().StatusCode;
-                apiError.ErrorMessage = "Invalid User ID or Password";
-                apiError.ErrorDetails = "User Id or Password doesn't exist";
-                return Unauthorized(apiError);  
+                apiError.ErrorMessage = "Invalid user name or password";
+                apiError.ErrorDetails = "This error appear when provided user id or password does not exists";
+                return Unauthorized(apiError);
             }
 
             var loginResponse = new LoginResponseDto();
             loginResponse.UserName = user.Username;
             loginResponse.Token = CreateJWT(user);
-            return Ok(loginResponse);    
+            return Ok(loginResponse);
         }
 
-
         [HttpPost("register")]
-
         public async Task<IActionResult> Register(LoginReqDto loginReq)
         {
             ApiError apiError = new ApiError();
+
             if (loginReq.UserName.IsEmpty() || loginReq.Password.IsEmpty())
             {
                 apiError.ErrorCode = BadRequest().StatusCode;
-                apiError.ErrorMessage = "Username or password cannot be empty";
+                apiError.ErrorMessage = "User name or password can not be blank";
                 return BadRequest(apiError);
             }
 
             if (await uow.UserRepository.UserAlreadyExists(loginReq.UserName))
             {
                 apiError.ErrorCode = BadRequest().StatusCode;
-                apiError.ErrorMessage = "User Already Exists";
+                apiError.ErrorMessage = "User already exists, please try different user name";
                 return BadRequest(apiError);
             }
 
@@ -70,10 +67,11 @@ namespace WebApi.Controllers
             return StatusCode(201);
         }
 
-            private string CreateJWT(User user)
+        private string CreateJWT(User user)
         {
             var secretKey = configuration.GetSection("AppSettings:Key").Value;
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
+
             var claims = new Claim[]
             {
                 new Claim(ClaimTypes.Name,user.Username),
@@ -81,6 +79,7 @@ namespace WebApi.Controllers
             };
 
             var signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
+
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
@@ -91,7 +90,7 @@ namespace WebApi.Controllers
             var tokenHandler = new JwtSecurityTokenHandler();
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
-
         }
+
     }
 }
