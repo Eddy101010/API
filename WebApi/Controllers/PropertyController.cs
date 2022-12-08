@@ -173,12 +173,13 @@ namespace WebApi.Controllers
             }
         }
 
-        //delete static photo
+        //delete static photo   
         [HttpDelete("delete-static-photo/{id}")]
         [AllowAnonymous]
-        public bool DeleteStaticFile(int id)
+        public bool DeleteStaticFile(int id, IFormFile file)
         {
-            string extension = ".png";
+            string name = file.FileName;
+            string extension = Path.GetExtension(file.FileName);
             //read the file
             string path = Path.Combine(Environment.CurrentDirectory, "wwwroot/images");
             if (!Directory.Exists(path))
