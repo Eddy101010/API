@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using WebApi.Models;
 
 namespace WebAPI.Models
 {
-
+    [Table("Photo")]
     public class Photo : BaseEntity
     {
         [Required]

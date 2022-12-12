@@ -56,26 +56,25 @@ namespace WebApi.Controllers
         //add photo to cloud
         [HttpPost("add/photo/{propId}")]
         [Authorize]
-        public async Task<IActionResult> AddPropertyCloudPhoto(IFormFile file, int propId)   
+        public async Task<IActionResult> AddPropertyCloudPhoto(IFormFile file, int propId)
         {
             var result = await photoService.UploadPhotoAsync(file);
             if (result.Error != null)
                 return BadRequest(result.Error.Message);
 
-            var property = await uow.PropertyRepository.GetPropertyByIdAsync(propId); 
+            var property = await uow.PropertyRepository.GetPropertyByIdAsync(propId);
 
             var photo = new Photo
             {
                 ImageUrl = result.SecureUrl.AbsoluteUri,
                 PublicId = result.PublicId
             };
-            property.Photos.Add(photo);
-            if (property.Photos.Count == 1)
+            if (property.Photos.Count == 0)
             {
                 photo.IsPrimary = true;
             }
 
-            
+            property.Photos.Add(photo);
             await uow.SaveAsync();
             return StatusCode(201);
         }
